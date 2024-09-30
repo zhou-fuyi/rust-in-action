@@ -157,4 +157,4 @@ Rust 的单元测试一般放在和被测代码相同的文件中，使用条件
 export RUSTUP_DIST_SERVER=https://mirrors.sjtug.sjtu.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.sjtug.sjtu.edu.cn/rust-static/rustup
 
-rust国内安装必备环境配置
+rust国内安装必备环境配置[未验证]
