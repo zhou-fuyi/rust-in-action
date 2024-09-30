@@ -118,29 +118,43 @@ Rust 的模式匹配是一个很重要的语言特性，被广泛应用在状态
 
 ### 错误处理
 
-Rust 没有沿用 C++/Java 等诸多前辈使用的异常处理方式，而是借鉴 Haskell，把错误封装在 Result 类型中，同时提供了 ? 操作符来传播错误，方便开发。Result 类型是一个泛型数据结构，T 代表成功执行返回的结果类型，E 代表错误类型。
+Rust 没有沿用 C++/Java 等诸多前辈使用的异常处理方式，而是借鉴 Haskell，**把错误封装在 Result 类型中，同时提供了 ? 操作符来传播错误**，方便开发。Result 类型是一个泛型数据结构，T 代表成功执行返回的结果类型，E 代表错误类型。
+
+> Rust 的模式匹配是一个很重要的语言特性，被广泛应用在状态机处理、消息处理和错误处理中，如果你之前使用的语言是 C / Java / Python / JavaScript ，没有强大的模式匹配支持，要好好练习这一块。
 
 > 感觉很抽象啊
 
 ### Rust项目的组织
 
-#### Mod
+#### Mod（多模块）
 
 当 Rust 代码规模越来越大时，我们就无法用单一文件承载代码了，需要多个文件甚至多个目录协同工作，这时我们可以用 mod 来组织代码。
 
 > 类似ES中的模块化的感觉
 
-#### Crate
+#### Crate（单项目|库）
 
-在 Rust 里，一个项目也被称为一个 crate。crate 可以是可执行项目，也可以是一个库，我们可以用 cargo new -- lib 来创建一个库。当 crate 里的代码改变时，这个 crate 需要被重新编译。
+在 Rust 里，**一个项目也被称为一个 crate**。crate 可以是可执行项目，也可以是一个库，我们可以用 cargo new -- lib 来创建一个库。当 crate 里的代码改变时，这个 crate 需要被重新编译。
 在一个 crate 下，除了项目的源代码，单元测试和集成测试的代码也会放在 crate 里。
 
-##### Workspace
+Rust 的单元测试一般放在和被测代码相同的文件中，使用条件编译 #[cfg(test)] 来确保测试代码只在测试环境下编译。
+集成测试一般放在 tests 目录下，和 src 平行。和单元测试不同，集成测试只能测试 crate 下的公开接口，编译时编译成单独的可执行文件。
+
+##### Workspace（多项目）
 
 当代码规模继续增长，把所有代码放在一个 crate 里就不是一个好主意了，因为任何代码的修改都会导致这个 crate 重新编译，这样效率不高。我们可以使用 workspace。
+
+一个 workspace 可以包含一到多个 crates，当代码发生改变时，只有涉及的 crates 才需要重新编译。当我们要构建一个 workspace 时，需要先在某个目录下生成一个如图所示的 Cargo.toml，包含 workspace 里所有的 crates，然后可以 cargo new 生成对应的 crates：
 
 ![alt text](image/workspace.png)
 
 ## Rust in Vscode
 
 ![alt text](image/rust-vscode-extents.jpg)
+
+## 国内镜像
+
+export RUSTUP_DIST_SERVER=https://mirrors.sjtug.sjtu.edu.cn/rust-static
+export RUSTUP_UPDATE_ROOT=https://mirrors.sjtug.sjtu.edu.cn/rust-static/rustup
+
+rust国内安装必备环境配置
